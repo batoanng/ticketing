@@ -1,0 +1,30 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+build:
+  local:
+    # donot need to push code to dokerhub every build image
+    push: false
+  artifacts:
+    - image: joker7nbt/ticketing-auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        # copy math files to pods
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
+        # the rest makes container rebuilds
+    - image: joker7nbt/ticketing-client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        # copy math files to pods
+        manual:
+          - src: '**/*.js'
+            dest: .
