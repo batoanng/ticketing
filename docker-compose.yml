@@ -1,0 +1,16 @@
+version: '2.1'
+
+services:
+  mongodb:
+    image: mongo:4.4
+    mem_limit: 550m
+    ports:
+      - "27017:27017"
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    healthcheck:
+      test: "mongo --eval 'db.stats().ok'"
+      interval: 20s
+      timeout: 5s
+      retries: 10

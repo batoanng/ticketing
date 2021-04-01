@@ -10,13 +10,14 @@ const SignUp = () => {
         event.preventDefault();
 
         try {
-            const res = await axios.post('/api/users/signup', {
+            const res = await axios.post(`${process.env.AUTH_SERIVCE}/api/users/signup`, {
                 email: email,
                 password: password
             });
             console.log(res.data);
         } catch (e) {
-            setErrors(e.response.data.errors);
+            console.log(e.response.data.errors)
+            setErrors(e.response.data);
         }
     };
 
