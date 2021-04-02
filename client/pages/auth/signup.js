@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import axios from 'axios';
+import getConfig from "next/config";
+const { publicRuntimeConfig } = getConfig();
+const AUTH_SERVICE = publicRuntimeConfig.REACT_APP_AUTH_SERVICE ? publicRuntimeConfig.REACT_APP_AUTH_SERVICE : '';
 
 const SignUp = () => {
     const [email, setEmail] = useState('');
@@ -10,14 +13,13 @@ const SignUp = () => {
         event.preventDefault();
 
         try {
-            const res = await axios.post(`${process.env.AUTH_SERIVCE}/api/users/signup`, {
+            const res = await axios.post(`${AUTH_SERVICE}/api/users/signup`, {
                 email: email,
                 password: password
             });
-            console.log(res.data);
+            setErrors([]);
         } catch (e) {
-            console.log(e.response.data.errors)
-            setErrors(e.response.data);
+            e.response && e.response.data && setErrors(e.response.data.errors);
         }
     };
 

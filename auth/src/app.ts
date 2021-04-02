@@ -8,11 +8,13 @@ import {signOutRouter} from './routes/signout';
 import {signUpRouter} from './routes/signup';
 import {errorHandler} from './middlewares/error-handler';
 import {NotFoundError} from './errors/not-found-error';
+const cors = require('cors');
 
 const app = express();
 
 app.set('trust proxy', true);
 app.use(json());
+app.use(cors());
 app.use(cookieSession({
     signed: false,
     //ignore http, just care for https
