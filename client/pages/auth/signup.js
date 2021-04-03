@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import getConfig from "next/config";
 import useRequest from '../../hooks/use-request';
+import Router from 'next/router';
+
 
 const { publicRuntimeConfig } = getConfig();
 const AUTH_SERVICE = publicRuntimeConfig.REACT_APP_AUTH_SERVICE ? publicRuntimeConfig.REACT_APP_AUTH_SERVICE : '';
@@ -14,7 +16,8 @@ const SignUp = () => {
         {
             email: email,
             password: password
-        }
+        },
+         () => Router.push('/')
     );
 
     const onSubmit = async (event) => {
@@ -22,6 +25,7 @@ const SignUp = () => {
 
         const data = await doRequest();
         console.log(data);
+
     };
 
     return (
