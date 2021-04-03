@@ -8,7 +8,7 @@ metadata:
     nginx.ingress.kubernetes.io/use-regex: 'true'
 spec:
   rules:
-    - host: joker7nbt.dev
+    - host: 127.0.0.1
       http:
           paths:
             - path: /api/users/?(.*)

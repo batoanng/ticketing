@@ -14,6 +14,12 @@ const LandingPage = ({ currentUser }) => {
 }
 
 LandingPage.getInitialProps = async () => {
+    if (typeof window === "undefined") {
+        // This is called from server
+    } else {
+        // This is called from browser
+    }
+
     const res = await axios.get(`${AUTH_SERVICE}/api/users/currentuser`);
 
     return res.data;
