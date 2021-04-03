@@ -3,14 +3,11 @@ import getConfig from "next/config";
 import useRequest from '../../hooks/use-request';
 import Router from 'next/router';
 
-const { publicRuntimeConfig } = getConfig();
-const AUTH_SERVICE = publicRuntimeConfig.REACT_APP_AUTH_SERVICE ? publicRuntimeConfig.REACT_APP_AUTH_SERVICE : '';
-
 const SignIn = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const { doRequest, error } = useRequest(
-        `${AUTH_SERVICE}/api/users/signin`,
+        '/api/users/signin',
         'post',
         {
             email: email,

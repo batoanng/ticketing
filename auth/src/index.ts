@@ -9,8 +9,8 @@ const start = async () => {
     }
 
     try {
-        const mongoDbUrl = process.env.MONGO_DB || 'mongodb://auth-mongo-srv:27017';
-        await mongoose.connect(`${mongoDbUrl}`, {
+        const mongoDbUrl = 'mongodb://auth-mongo-srv:27017';
+        await mongoose.connect(mongoDbUrl, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
             useCreateIndex: true,
@@ -24,7 +24,7 @@ const start = async () => {
 
 start();
 
-app.listen(process.env.DEV_PORT || 3000, () => {
-    console.log(`Listening on port ${process.env.DEV_PORT || 3000}!!!`);
+app.listen(3000, () => {
+    console.log(`Listening on port 3000!!!`);
 });
 
