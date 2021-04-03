@@ -13,16 +13,23 @@ const LandingPage = ({ currentUser }) => {
     );
 }
 
-LandingPage.getInitialProps = async () => {
+LandingPage.getInitialProps = async ({req}) => {
     if (typeof window === "undefined") {
-        // This is called from server
+        // This is called from server, which is inside a pod
+        // Need to call to another namespace
+        const { data } = await axios.get(
+            `http://ingress-nginx.ingress-nginx.svc.cluster.local/api/users/currentuser`,
+            {
+                // Define the host to go to correct server and get the cookie
+                headers: req.headers
+            }
+        );
+        return data;
     } else {
         // This is called from browser
+        const { data } = await axios.get(`/api/users/currentuser`);
+        return data
     }
-
-    const res = await axios.get(`${AUTH_SERVICE}/api/users/currentuser`);
-
-    return res.data;
 }
 
 export default LandingPage;
