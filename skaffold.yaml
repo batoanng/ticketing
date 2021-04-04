@@ -28,3 +28,12 @@ build:
         manual:
           - src: '**/*.js'
             dest: .
+    - image: joker7nbt/ticketing-tickets
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        # copy math files to pods
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
