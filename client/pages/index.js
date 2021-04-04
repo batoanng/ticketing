@@ -3,10 +3,10 @@ import buildClient from '../apis/build-client';
 const LandingPage = ({ currentUser }) => {
     return currentUser ?
         (
-            <div>You are sign in</div>
+            <h1>You are sign in</h1>
         ):
         (
-            <div>You are NOT sign in</div>
+            <h1>You are NOT sign in</h1>
         );
 }
 

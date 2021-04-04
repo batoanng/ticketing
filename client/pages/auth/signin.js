@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import getConfig from "next/config";
 import useRequest from '../../hooks/use-request';
 import Router from 'next/router';
 

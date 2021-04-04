@@ -21,6 +21,8 @@ spec:
               secretKeyRef:
                 name: jwt-secret
                 key: JWT_SECRET
+          - name: INGRESS_NGINX_NAMESPACE
+            value: 'ingress-nginx-controller.ingress-nginx'
           - name: REACT_APP_AUTH_SERVER
             value: 'auth-srv'
 ---
