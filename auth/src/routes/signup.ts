@@ -1,7 +1,6 @@
 import express, {Request, Response} from 'express';
 import { body } from 'express-validator';
-import { BadRequestError } from '../../../common/src/errors/bad-request-error';
-import {validateRequest} from '../../../common/src/middlewares/validate-request';
+import { BadRequestError, validateRequest } from '@joker7nbt-ticketing/common';
 import {User} from '../models/user';
 import jwt from 'jsonwebtoken';
 

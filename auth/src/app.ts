@@ -6,8 +6,7 @@ import {currentUserRouter} from './routes/current-user';
 import {signInRouter} from './routes/signin';
 import {signOutRouter} from './routes/signout';
 import {signUpRouter} from './routes/signup';
-import {errorHandler} from '../../common/src/middlewares/error-handler';
-import {NotFoundError} from '../../common/src/errors/not-found-error';
+import { errorHandler, NotFoundError } from '@joker7nbt-ticketing/common';
 const cors = require('cors');
 
 const app = express();
