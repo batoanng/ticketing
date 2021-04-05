@@ -30,7 +30,7 @@ const SignIn = () => {
                             <div id="login-box" className="col-md-12">
                                 <h3 className="text-center text-info">Sign In</h3>
                                 <div className="form-group">
-                                    <label htmlFor="username" className="text-info">Email:</label><br />
+                                    <label htmlFor="email" className="text-info">Email:</label><br />
                                     <input
                                         value={email}
                                         onChange={e => setEmail(e.target.value)}
