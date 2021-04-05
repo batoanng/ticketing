@@ -22,26 +22,37 @@ const SignUp = () => {
 
     return (
         <form onSubmit={onSubmit}>
-            <h1>Sign Up</h1>
-            <div className="form-group">
-                <label>Email Address</label>
-                <input
-                    value={email}
-                    onChange={e => setEmail(e.target.value)}
-                    className="form-control"
-                />
+            <div id="signup">
+                <h3 className="text-center text-white pt-5">Sign up</h3>
+                <div className="container">
+                    <div id="login-row" className="row justify-content-center align-items-center">
+                        <div id="login-column" className="col-md-6">
+                            <div id="login-box" className="col-md-12">
+                                <h3 className="text-center text-info">Sign Up</h3>
+                                <div className="form-group">
+                                    <label htmlFor="username" className="text-info">Email:</label><br />
+                                    <input
+                                        value={email}
+                                        onChange={e => setEmail(e.target.value)}
+                                        className="form-control"
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <label htmlFor="password" className="text-info">Password:</label><br />
+                                    <input
+                                        value={password}
+                                        onChange={e => setPassword(e.target.value)}
+                                        type="password"
+                                        className="form-control"
+                                    />
+                                </div>
+                                {error}
+                                <button className="btn btn-info" type='submit'>Sign Up</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div className="form-group">
-                <label>Password</label>
-                <input
-                    value={password}
-                    onChange={e => setPassword(e.target.value)}
-                    type="password"
-                    className="form-control"
-                />
-            </div>
-            {error}
-            <button className="btn btn-primary">Sign Up</button>
         </form>
     );
 };
