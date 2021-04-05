@@ -1,20 +1,20 @@
-import {CustomerError} from './custom-error';
+import { CustomerError } from "./custom-error";
 
 export class BadRequestError extends CustomerError {
-    errorCode = 400;
-    msg: string;
+  errorCode = 400;
+  msg: string;
 
-    constructor(errorMsg: string){
-        super(errorMsg);
-        this.msg = errorMsg;
-        Object.setPrototypeOf(this, BadRequestError.prototype);
-    }
+  constructor(errorMsg: string) {
+    super(errorMsg);
+    this.msg = errorMsg;
+    Object.setPrototypeOf(this, BadRequestError.prototype);
+  }
 
-    serializeError() {
-        return [
-            {
-                message: this.msg
-            }
-        ];
-    }
+  serializeError() {
+    return [
+      {
+        message: this.msg,
+      },
+    ];
+  }
 }
