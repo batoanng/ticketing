@@ -58,5 +58,5 @@ it("should create a ticket with valid input", async function () {
       title: "test",
       price: 10,
     })
-    .expect(200);
+    .expect(201);
 });
