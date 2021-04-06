@@ -7,13 +7,11 @@ import { signInRouter } from "./routes/signin";
 import { signOutRouter } from "./routes/signout";
 import { signUpRouter } from "./routes/signup";
 import { errorHandler, NotFoundError } from "@joker7nbt-ticketing/common";
-const cors = require("cors");
 
 const app = express();
 
 app.set("trust proxy", true);
 app.use(json());
-app.use(cors());
 app.use(
   cookieSession({
     signed: false,
