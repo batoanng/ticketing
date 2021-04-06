@@ -1,5 +1,6 @@
 import request from "supertest";
 import { app } from "../../app";
+import { Ticket } from "../../models/ticket";
 
 it("should has a router handler for /api/tickets for post requests", async function () {
   const res = await request(app).post("/api/tickets").send();
@@ -51,6 +52,8 @@ it("should return an error if invalid price is provided", async function () {
 });
 
 it("should create a ticket with valid input", async function () {
+  let tickets = await Ticket.find({});
+  expect(tickets.length).toEqual(0);
   await request(app)
     .post("/api/tickets")
     .set("Cookie", global.signin())
@@ -59,4 +62,6 @@ it("should create a ticket with valid input", async function () {
       price: 10,
     })
     .expect(201);
+  tickets = await Ticket.find({});
+  expect(tickets.length).toEqual(1);
 });

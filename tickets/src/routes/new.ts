@@ -1,6 +1,7 @@
 import express, { Request, Response } from "express";
 import { body } from "express-validator";
 import { validateRequest, requireAuth } from "@joker7nbt-ticketing/common";
+import { Ticket } from "../models/ticket";
 
 const router = express.Router();
 
@@ -16,7 +17,15 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    res.status(201).send();
+    const { title, price } = req.body;
+    const ticket = Ticket.build({
+      title,
+      price,
+      userId: req.currentUser!.id,
+    });
+    await ticket.save();
+    console.log("Create ticket!");
+    res.status(201).send(ticket);
   }
 );
 
