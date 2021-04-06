@@ -8,7 +8,6 @@ const router = express.Router();
 router.post(
   "/api/tickets",
   requireAuth,
-  validateRequest,
   [
     body("title").not().isEmpty().withMessage("Title is required!"),
     body("price")
