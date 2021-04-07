@@ -10,7 +10,7 @@ export const errorHandler = (
   if (error instanceof CustomerError) {
     return res.status(error.errorCode).json({ errors: error.serializeError() });
   }
-
+  console.error(error);
   return res.status(400).json({
     errors: [
       {
