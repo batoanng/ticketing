@@ -31,7 +31,7 @@ router.put(
     }
     ticket.title = title;
     ticket.price = price;
-    ticket.save();
+    await ticket.save();
     res.send(ticket);
   }
 );
