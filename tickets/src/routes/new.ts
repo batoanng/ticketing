@@ -23,7 +23,6 @@ router.post(
       userId: req.currentUser!.id,
     });
     await ticket.save();
-    console.log("Create ticket!");
     res.status(201).send(ticket);
   }
 );

@@ -9,6 +9,8 @@ import {
 } from "@joker7nbt-ticketing/common";
 import { newRouter } from "./routes/new";
 import { showRouter } from "./routes/show";
+import { indexRouter } from "./routes/index";
+import { updateRouter } from "./routes/update";
 
 const app = express();
 
@@ -24,8 +26,10 @@ app.use(
 app.use(currentUser);
 
 //routers
+app.use(updateRouter);
 app.use(newRouter);
 app.use(showRouter);
+app.use(indexRouter);
 
 //handle invalid routes
 app.get("*", async () => {
