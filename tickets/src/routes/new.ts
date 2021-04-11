@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import { body } from "express-validator";
 import { validateRequest, requireAuth } from "@joker7nbt-ticketing/common";
 import { Ticket } from "../models/ticket";
+import { TicketCreatedPublisher } from "../events/publishers/ticket-created-publisher";
 
 const router = express.Router();
 
@@ -17,12 +18,19 @@ router.post(
   validateRequest,
   async (req: Request, res: Response) => {
     const { title, price } = req.body;
+    const userId = req.currentUser!.id;
     const ticket = Ticket.build({
       title,
       price,
-      userId: req.currentUser!.id,
+      userId,
     });
     await ticket.save();
+    await new TicketCreatedPublisher(client).publish({
+      id: ticket.id,
+      title,
+      price,
+      userId,
+    });
     res.status(201).send(ticket);
   }
 );
