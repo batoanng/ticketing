@@ -18,6 +18,13 @@ const start = async () => {
       process.env.NATS_CLIENT_ID!,
       process.env.NATS_URL!
     );
+    natWrapper.client.on("close", () => {
+      console.log("NATS connection closed!");
+      process.exit();
+    });
+    process.on("SIGINT", () => natWrapper.client.close());
+    process.on("SIGTERM", () => natWrapper.client.close());
+
     await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
