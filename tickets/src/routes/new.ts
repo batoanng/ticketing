@@ -3,6 +3,7 @@ import { body } from "express-validator";
 import { validateRequest, requireAuth } from "@joker7nbt-ticketing/common";
 import { Ticket } from "../models/ticket";
 import { TicketCreatedPublisher } from "../events/publishers/ticket-created-publisher";
+import { natWrapper } from "../nats-wrapper";
 
 const router = express.Router();
 
@@ -25,7 +26,7 @@ router.post(
       userId,
     });
     await ticket.save();
-    await new TicketCreatedPublisher(client).publish({
+    await new TicketCreatedPublisher(natWrapper.client).publish({
       id: ticket.id,
       title,
       price,
