@@ -25,4 +25,4 @@ class NatsWrapper {
   }
 }
 
-export const natWrapper = new NatsWrapper();
+export const natsWrapper = new NatsWrapper();

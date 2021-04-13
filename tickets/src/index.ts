@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { app } from "./app";
-import { natWrapper } from "./nats-wrapper";
+import { natsWrapper } from "./nats-wrapper";
 
 require("dotenv").config();
 
@@ -13,17 +13,17 @@ const start = async () => {
   }
 
   try {
-    await natWrapper.connect(
+    await natsWrapper.connect(
       process.env.NATS_CLUSTER_ID!,
       process.env.NATS_CLIENT_ID!,
       process.env.NATS_URL!
     );
-    natWrapper.client.on("close", () => {
+    natsWrapper.client.on("close", () => {
       console.log("NATS connection closed!");
       process.exit();
     });
-    process.on("SIGINT", () => natWrapper.client.close());
-    process.on("SIGTERM", () => natWrapper.client.close());
+    process.on("SIGINT", () => natsWrapper.client.close());
+    process.on("SIGTERM", () => natsWrapper.client.close());
 
     await mongoose.connect(process.env.MONGO_URI, {
       useNewUrlParser: true,
