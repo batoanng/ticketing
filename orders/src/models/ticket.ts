@@ -4,7 +4,6 @@ import mongoose from "mongoose";
 interface TicketAttrs {
   title: string;
   price: number;
-  userId: string;
 }
 
 //interface for type checking of schema
@@ -14,10 +13,9 @@ interface TicketModel extends mongoose.Model<TicketDoc> {
 
 //interface for type checking of each Ticket document
 //solve the issue unpredicted additional properties in mongoose model
-interface TicketDoc extends mongoose.Document {
+export interface TicketDoc extends mongoose.Document {
   title: string;
   price: number;
-  userId: string;
 }
 
 const TicketSchema = new mongoose.Schema(
@@ -29,10 +27,7 @@ const TicketSchema = new mongoose.Schema(
     price: {
       type: Number,
       required: true,
-    },
-    userId: {
-      type: String,
-      required: true,
+      min: 0,
     },
   },
   {

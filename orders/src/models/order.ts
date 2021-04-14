@@ -1,38 +1,47 @@
 import mongoose from "mongoose";
+import { OrderStatus } from "@joker7nbt-ticketing/common";
+import { TicketDoc } from "./ticket";
 
 //attrs for type checking with typescript
-interface TicketAttrs {
-  title: string;
-  price: number;
+interface OrderAttrs {
   userId: string;
+  status: OrderStatus;
+  expireAt: Date;
+  ticket: TicketDoc;
 }
 
 //interface for type checking of schema
-interface TicketModel extends mongoose.Model<TicketDoc> {
-  build(attrs: TicketAttrs): TicketDoc;
+interface OrderModel extends mongoose.Model<OrderDoc> {
+  build(attrs: OrderAttrs): OrderDoc;
 }
 
-//interface for type checking of each Ticket document
+//interface for type checking of each Order document
 //solve the issue unpredicted additional properties in mongoose model
-interface TicketDoc extends mongoose.Document {
-  title: string;
-  price: number;
+interface OrderDoc extends mongoose.Document {
   userId: string;
+  status: OrderStatus;
+  expireAt: Date;
+  ticket: TicketDoc;
 }
 
-const TicketSchema = new mongoose.Schema(
+const OrderSchema = new mongoose.Schema(
   {
-    title: {
-      type: String,
-      required: true,
-    },
-    price: {
-      type: Number,
-      required: true,
-    },
     userId: {
       type: String,
       required: true,
+    },
+    status: {
+      type: String,
+      required: true,
+      enum: Object.values(OrderStatus),
+      default: OrderStatus.CREATED,
+    },
+    expireAt: {
+      type: mongoose.Schema.Types.Date,
+    },
+    ticket: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Ticket",
     },
   },
   {
@@ -46,10 +55,10 @@ const TicketSchema = new mongoose.Schema(
   }
 );
 
-TicketSchema.statics.build = (attrs: TicketAttrs) => {
-  return new Ticket(attrs);
+OrderSchema.statics.build = (attrs: OrderAttrs) => {
+  return new Order(attrs);
 };
 
-const Ticket = mongoose.model<TicketDoc, TicketModel>("Ticket", TicketSchema);
+const Order = mongoose.model<OrderDoc, OrderModel>("Order", OrderSchema);
 
-export { Ticket };
+export { Order };
