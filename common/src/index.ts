@@ -18,3 +18,6 @@ export * from "./events/ticket-updated-event";
 export * from "./events/ticket-created-event";
 export * from "./events/base-publisher";
 export * from "./events/base-listener";
+
+// Export enums
+export * from "./enums/order-status";
