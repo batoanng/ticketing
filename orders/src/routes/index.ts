@@ -1,10 +1,14 @@
 import express, { Request, Response } from "express";
+import { requireAuth } from "@joker7nbt-ticketing/common";
+import { Order } from "../models/order";
 
 const router = express.Router();
 
-router.get("/api/orders", async (req: Request, res: Response) => {
-  // const tickets = await Ticket.find({});
-  res.send("123");
+router.get("/api/orders", requireAuth, async (req: Request, res: Response) => {
+  const orders = await Order.find({
+    userId: req.currentUser!.id,
+  }).populate("ticket");
+  res.status(200).send(orders);
 });
 
 export { router as indexRouter };
