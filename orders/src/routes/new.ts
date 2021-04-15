@@ -1,8 +1,15 @@
 import express, { Request, Response } from "express";
 import { body } from "express-validator";
-import { validateRequest, requireAuth } from "@joker7nbt-ticketing/common";
-import { natsWrapper } from "../nats-wrapper";
+import {
+  BadRequestError,
+  NotFoundError,
+  OrderStatus,
+  requireAuth,
+  validateRequest,
+} from "@joker7nbt-ticketing/common";
 import mongoose from "mongoose";
+import { Ticket } from "../models/ticket";
+import { Order } from "../models/order";
 
 const router = express.Router();
 
@@ -17,7 +24,17 @@ router.post(
       .withMessage("Ticket ID is required!"),
   ],
   validateRequest,
-  async (req: Request, res: Response) => {}
+  async (req: Request, res: Response) => {
+    const { ticketId } = req.body;
+    const ticket = await Ticket.findById(ticketId);
+    if (!ticket) {
+      throw new NotFoundError();
+    }
+    if (ticket.isReserved()) {
+      throw new BadRequestError("Ticket is already reserved");
+    }
+    return res.send({});
+  }
 );
 
 export { router as newRouter };

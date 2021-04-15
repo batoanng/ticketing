@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import { Order } from "./order";
+import { OrderStatus } from "@joker7nbt-ticketing/common";
 
 //attrs for type checking with typescript
 interface TicketAttrs {
@@ -16,6 +18,7 @@ interface TicketModel extends mongoose.Model<TicketDoc> {
 export interface TicketDoc extends mongoose.Document {
   title: string;
   price: number;
+  isReserved(): Promise<boolean>;
 }
 
 const TicketSchema = new mongoose.Schema(
@@ -40,6 +43,21 @@ const TicketSchema = new mongoose.Schema(
     },
   }
 );
+
+TicketSchema.methods.isReserved = async function () {
+  //this === the ticket call this method
+  const existingOrder = await Order.findOne({
+    ticket: this,
+    status: {
+      $in: [
+        OrderStatus.CREATED,
+        OrderStatus.AWAITING_PAYMENT,
+        OrderStatus.COMPLETED,
+      ],
+    },
+  });
+  return !!existingOrder;
+};
 
 TicketSchema.statics.build = (attrs: TicketAttrs) => {
   return new Ticket(attrs);
