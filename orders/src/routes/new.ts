@@ -28,7 +28,6 @@ router.post(
   ],
   validateRequest,
   async (req: Request, res: Response) => {
-    console.log(1212);
     const { ticketId } = req.body;
     const ticket = await Ticket.findById(ticketId);
     if (!ticket) {
