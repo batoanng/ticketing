@@ -46,7 +46,7 @@ router.post(
       ticket,
     });
     await order.save();
-    return res.status(201).send({ order });
+    return res.status(201).send(order);
   }
 );
 

@@ -10,7 +10,7 @@ export class NotFoundError extends CustomerError {
   serializeError() {
     return [
       {
-        message: "route not found",
+        message: "not found",
       },
     ];
   }
