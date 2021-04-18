@@ -5,22 +5,30 @@ import {
   NotFoundError,
   NotAuthorizedError,
 } from "@joker7nbt-ticketing/common";
-import { body } from "express-validator";
-import { natsWrapper } from "../nats-wrapper";
+import { OrderStatus } from "../../../common/src";
+import { Order } from "../models/order";
 
 const router = express.Router();
 
 router.delete(
-  "/api/orders/:id",
+  "/api/orders/:orderId",
   requireAuth,
-  [
-    body("title").not().isEmpty().withMessage("Title is required!"),
-    body("price")
-      .isFloat({ gt: 0 })
-      .withMessage("Price must be greater than 0"),
-  ],
-  validateRequest,
-  async (req: Request, res: Response) => {}
+  async (req: Request, res: Response) => {
+    const { orderId } = req.params;
+
+    const order = await Order.findById(orderId);
+
+    if (!order) {
+      throw new NotFoundError();
+    }
+    if (order.userId !== req.currentUser!.id) {
+      throw new NotAuthorizedError();
+    }
+    order.status = OrderStatus.CANCELLED;
+    await order.save();
+
+    res.status(204).send(order);
+  }
 );
 
 export { router as deleteRouter };

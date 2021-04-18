@@ -21,7 +21,7 @@ export interface TicketDoc extends mongoose.Document {
   isReserved(): Promise<boolean>;
 }
 
-const TicketSchema = new mongoose.Schema(
+export const TicketSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -47,6 +47,7 @@ const TicketSchema = new mongoose.Schema(
 TicketSchema.methods.isReserved = async function () {
   //this === the ticket call this method
   const existingOrder = await Order.findOne({
+    //@ts-ignore
     ticket: this,
     status: {
       $in: [
