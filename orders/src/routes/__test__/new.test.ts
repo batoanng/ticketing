@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 import { Ticket } from "../../models/ticket";
 import { Order } from "../../models/order";
 import { OrderStatus } from "@joker7nbt-ticketing/common";
+import { natsWrapper } from "../../nats-wrapper";
 
 it("should return an error if the ticket is not existed", async () => {
   const ticketId = mongoose.Types.ObjectId();
@@ -48,4 +49,20 @@ it("should create an order if ticket is valid", async () => {
     .set("Cookie", global.signin())
     .send({ ticketId: ticket2.id })
     .expect(201);
+});
+
+it("should emits an order created event", async () => {
+  const ticket = Ticket.build({
+    title: "concert",
+    price: 20,
+  });
+  await ticket.save();
+
+  await request(app)
+    .post("/api/orders")
+    .set("Cookie", global.signin())
+    .send({ ticketId: ticket.id })
+    .expect(201);
+
+  expect(natsWrapper.client.publish).toHaveBeenCalled();
 });
