@@ -6,8 +6,8 @@ import {
 import { Message } from "node-nats-streaming";
 
 export class TicketCreatedListener extends Listener<TicketCreatedEvent> {
-  subject: Subjects.TicketCreated = Subjects.TicketCreated;
-  queueGroupName = "test";
+  readonly subject = Subjects.TicketCreated;
+  queueGroupName = "orders-service";
   onMessage(data: TicketCreatedEvent["data"], msg: Message) {
     console.log(msg);
   }
