@@ -1,6 +1,5 @@
 import {
   Publisher,
-  TicketUpdatedEvent,
   Subjects,
   OrderCancelledEvent,
 } from "@joker7nbt-ticketing/common";

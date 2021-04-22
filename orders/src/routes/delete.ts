@@ -1,11 +1,10 @@
 import express, { Request, Response } from "express";
 import {
-  validateRequest,
   requireAuth,
   NotFoundError,
   NotAuthorizedError,
+  OrderStatus,
 } from "@joker7nbt-ticketing/common";
-import { OrderStatus } from "../../../common/src";
 import { Order } from "../models/order";
 import { OrderCancelledPublisher } from "../events/publishers/order-cancelled-publisher";
 import { natsWrapper } from "../nats-wrapper";
