@@ -4,6 +4,7 @@ import { OrderStatus } from "@joker7nbt-ticketing/common";
 
 //attrs for type checking with typescript
 interface TicketAttrs {
+  id: string;
   title: string;
   price: number;
 }
@@ -61,7 +62,12 @@ TicketSchema.methods.isReserved = async function () {
 };
 
 TicketSchema.statics.build = (attrs: TicketAttrs) => {
-  return new Ticket(attrs);
+  const { id, title, price } = attrs;
+  return new Ticket({
+    _id: id,
+    title,
+    price,
+  });
 };
 
 const Ticket = mongoose.model<TicketDoc, TicketModel>("Ticket", TicketSchema);
