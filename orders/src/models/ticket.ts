@@ -13,6 +13,10 @@ interface TicketAttrs {
 //interface for type checking of schema
 interface TicketModel extends mongoose.Model<TicketDoc> {
   build(attrs: TicketAttrs): TicketDoc;
+  findByEvent(event: {
+    id: string;
+    version: number;
+  }): Promise<TicketDoc | null>;
 }
 
 //interface for type checking of each Ticket document
@@ -69,6 +73,13 @@ TicketSchema.statics.build = (attrs: TicketAttrs) => {
     _id: id,
     title,
     price,
+  });
+};
+
+TicketSchema.statics.findByEvent = (event: { id: string; version: number }) => {
+  return Ticket.findOne({
+    _id: event.id,
+    version: event.version - 1,
   });
 };
 
