@@ -6,6 +6,8 @@ import { Order } from "../../models/order";
 import { OrderStatus } from "@joker7nbt-ticketing/common";
 import { natsWrapper } from "../../nats-wrapper";
 
+const ticketId = mongoose.Types.ObjectId().toString();
+
 it("should return an error if the ticket is not existed", async () => {
   const ticketId = mongoose.Types.ObjectId();
   await request(app)
@@ -16,7 +18,7 @@ it("should return an error if the ticket is not existed", async () => {
 });
 
 it("should return an error if the ticket is already reserved", async () => {
-  const ticket = Ticket.build({ price: 10, title: "test" });
+  const ticket = Ticket.build({ id: ticketId, price: 10, title: "test" });
   await ticket.save();
   const order = Order.build({
     status: OrderStatus.CREATED,
@@ -33,8 +35,12 @@ it("should return an error if the ticket is already reserved", async () => {
 });
 
 it("should create an order if ticket is valid", async () => {
-  const ticket1 = Ticket.build({ price: 10, title: "test" });
-  const ticket2 = Ticket.build({ price: 10, title: "test" });
+  const ticket1 = Ticket.build({ id: ticketId, price: 10, title: "test" });
+  const ticket2 = Ticket.build({
+    id: mongoose.Types.ObjectId().toString(),
+    price: 10,
+    title: "test",
+  });
   await ticket1.save();
   await ticket2.save();
   const order = Order.build({
@@ -53,6 +59,7 @@ it("should create an order if ticket is valid", async () => {
 
 it("should emits an order created event", async () => {
   const ticket = Ticket.build({
+    id: ticketId,
     title: "concert",
     price: 20,
   });

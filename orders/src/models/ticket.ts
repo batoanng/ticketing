@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import { Order } from "./order";
 import { OrderStatus } from "@joker7nbt-ticketing/common";
+import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 
 //attrs for type checking with typescript
 interface TicketAttrs {
@@ -17,6 +18,7 @@ interface TicketModel extends mongoose.Model<TicketDoc> {
 //interface for type checking of each Ticket document
 //solve the issue unpredicted additional properties in mongoose model
 export interface TicketDoc extends mongoose.Document {
+  version: number;
   title: string;
   price: number;
   isReserved(): Promise<boolean>;
@@ -69,6 +71,9 @@ TicketSchema.statics.build = (attrs: TicketAttrs) => {
     price,
   });
 };
+
+TicketSchema.set("versionKey", "version");
+TicketSchema.plugin(updateIfCurrentPlugin);
 
 const Ticket = mongoose.model<TicketDoc, TicketModel>("Ticket", TicketSchema);
 

@@ -4,10 +4,14 @@ import { Ticket } from "../../models/ticket";
 import { Order } from "../../models/order";
 import { OrderStatus } from "@joker7nbt-ticketing/common";
 import { natsWrapper } from "../../nats-wrapper";
+import mongoose from "mongoose";
+
+const ticketId = mongoose.Types.ObjectId().toString();
 
 it("should marks an order as cancelled", async () => {
   // create a ticket with Ticket Model
   const ticket = Ticket.build({
+    id: ticketId,
     title: "concert",
     price: 20,
   });
@@ -36,6 +40,7 @@ it("should marks an order as cancelled", async () => {
 
 it("emits a order cancelled event", async () => {
   const ticket = Ticket.build({
+    id: ticketId,
     title: "concert",
     price: 20,
   });
