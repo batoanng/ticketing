@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { updateIfCurrentPlugin } from "mongoose-update-if-current";
 
 //attrs for type checking with typescript
 interface TicketAttrs {
@@ -18,6 +19,7 @@ interface TicketDoc extends mongoose.Document {
   title: string;
   price: number;
   userId: string;
+  version: number;
 }
 
 const TicketSchema = new mongoose.Schema(
@@ -49,6 +51,9 @@ const TicketSchema = new mongoose.Schema(
 TicketSchema.statics.build = (attrs: TicketAttrs) => {
   return new Ticket(attrs);
 };
+
+TicketSchema.set("versionKey", "version");
+TicketSchema.plugin(updateIfCurrentPlugin);
 
 const Ticket = mongoose.model<TicketDoc, TicketModel>("Ticket", TicketSchema);
 
