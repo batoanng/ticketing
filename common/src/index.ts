@@ -20,6 +20,7 @@ export * from "./events/order-created-event";
 export * from "./events/order-cancelled-event";
 export * from "./events/base-publisher";
 export * from "./events/base-listener";
+export * from "./events/expiration-complete-event";
 
 // Export enums
 export * from "./enums/order-status";
