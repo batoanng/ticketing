@@ -8,7 +8,6 @@ import { Message } from "node-nats-streaming";
 import { QUEUE_GROUP_NAME } from "../queue-group-name";
 import { Ticket } from "../../models/ticket";
 import { TicketUpdatedPublisher } from "../publishers/ticket-updated-publisher";
-import { natsWrapper } from "../../nats-wrapper";
 
 export class OrderCreatedListener extends Listener<OrderCreatedEvent> {
   readonly subject = Subjects.OrderCreated;
