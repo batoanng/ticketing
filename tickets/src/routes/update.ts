@@ -40,6 +40,7 @@ router.put(
       title,
       price,
       userId: ticket.userId,
+      orderId: ticket.orderId!,
     });
     res.send(ticket);
   }
