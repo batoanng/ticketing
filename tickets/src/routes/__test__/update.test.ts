@@ -1,6 +1,7 @@
 import request from "supertest";
 import { app } from "../../app";
 import mongoose from "mongoose";
+import { Ticket } from "../../models/ticket";
 
 const createTicket = () => {
   return request(app).post("/api/tickets").set("Cookie", global.signin()).send({
@@ -67,4 +68,29 @@ it("should update the ticket if provide valid inputs", async function () {
     })
     .expect(200);
   expect(updateTicket.body.title).toEqual("updated");
+});
+
+it("should reject updates if the ticket is reserved", async () => {
+  const cookie = global.signin();
+
+  const response = await request(app)
+    .post("/api/tickets")
+    .set("Cookie", cookie)
+    .send({
+      title: "test",
+      price: 10,
+    });
+
+  const ticket = await Ticket.findById(response.body.id);
+  ticket!.set({ orderId: mongoose.Types.ObjectId().toHexString() });
+  await ticket!.save();
+
+  await request(app)
+    .put(`/api/tickets/${response.body.id}`)
+    .set("Cookie", cookie)
+    .send({
+      title: "updated",
+      price: 100,
+    })
+    .expect(400);
 });
