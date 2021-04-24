@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: expiration-depl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: expiration
+  template:
+    metadata:
+      labels:
+        app: expiration
+    spec:
+      containers:
+      - name: expiration
+        image: joker7nbt/ticketing-expiration
+        env:
+          - name: NATS_CLUSTER_ID
+            value: 'ticketing'
+          - name: NATS_CLIENT_ID
+            value: 'expiration'
+          - name: NATS_URL
+            value: 'http://nats-srv:4222'
+          - name: REDIS_SERVER
+            value: 'expiration-redis-srv'
+

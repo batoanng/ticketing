@@ -46,3 +46,12 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
+    - image: joker7nbt/ticketing-expiration
+      context: expiration
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        # copy math files to pods
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .

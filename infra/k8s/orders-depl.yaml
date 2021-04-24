@@ -29,7 +29,7 @@ spec:
             value: 'orders'
           - name: NATS_URL
             value: 'http://nats-srv:4222'
-          - name: EXPIRATION_WINDOW_SECONDS
+          - name: EXPIRATION_ORDER_SECONDS
             value: '900'
 ---
 apiVersion: v1
