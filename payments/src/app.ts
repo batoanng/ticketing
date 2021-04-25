@@ -7,6 +7,7 @@ import {
   NotFoundError,
   currentUser,
 } from "@joker7nbt-ticketing/common";
+import { newRouter } from "./routes/new";
 
 const app = express();
 
@@ -22,6 +23,7 @@ app.use(
 app.use(currentUser);
 
 //routers
+app.use(newRouter);
 
 //handle invalid routes
 app.get("*", async () => {

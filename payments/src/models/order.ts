@@ -1,11 +1,6 @@
 import mongoose from "mongoose";
 import { OrderStatus } from "@joker7nbt-ticketing/common";
 import { updateIfCurrentPlugin } from "mongoose-update-if-current";
-import {
-  Ticket,
-  TicketDoc,
-  TicketSchema,
-} from "../../../orders/src/models/ticket";
 
 //attrs for type checking with typescript
 interface OrderAttrs {
