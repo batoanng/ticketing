@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 import { OrderStatus } from "@joker7nbt-ticketing/common";
 import { updateIfCurrentPlugin } from "mongoose-update-if-current";
+import {
+  Ticket,
+  TicketDoc,
+  TicketSchema,
+} from "../../../orders/src/models/ticket";
 
 //attrs for type checking with typescript
 interface OrderAttrs {
@@ -15,6 +20,7 @@ interface OrderAttrs {
 //interface for type checking of schema
 interface OrderModel extends mongoose.Model<OrderDoc> {
   build(attrs: OrderAttrs): OrderDoc;
+  findByEvent(event: { id: string; version: number }): Promise<OrderDoc | null>;
 }
 
 //interface for type checking of each Order document
@@ -56,11 +62,18 @@ const OrderSchema = new mongoose.Schema(
   }
 );
 
+OrderSchema.statics.findByEvent = (event: { id: string; version: number }) => {
+  return Order.findOne({
+    _id: event.id,
+    version: event.version - 1,
+  });
+};
+
 OrderSchema.statics.build = (attrs: OrderAttrs) => {
   return new Order({
     _id: attrs.id,
     status: attrs.status,
-    version: attrs.status,
+    version: attrs.version,
     userId: attrs.userId,
     price: attrs.price,
   });
