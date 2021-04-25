@@ -23,6 +23,11 @@ spec:
               secretKeyRef:
                 name: jwt-secret
                 key: JWT_SECRET
+          - name: STRIPE_SECRET
+            valueFrom:
+              secretKeyRef:
+                name: stripe-secret
+                key: STRIPE_SECRET
           - name: NATS_CLUSTER_ID
             value: 'ticketing'
           - name: NATS_CLIENT_ID
