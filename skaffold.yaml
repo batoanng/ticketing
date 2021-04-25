@@ -55,3 +55,12 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
+    - image: joker7nbt/ticketing-payments
+      context: payments
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        # copy math files to pods
+        manual:
+          - src: 'src/**/*.ts'
+            dest: .
