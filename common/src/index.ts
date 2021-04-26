@@ -21,6 +21,7 @@ export * from "./events/order-cancelled-event";
 export * from "./events/base-publisher";
 export * from "./events/base-listener";
 export * from "./events/expiration-complete-event";
+export * from "./events/payment-created-event";
 
 // Export enums
 export * from "./enums/order-status";
