@@ -63,11 +63,12 @@ it("should return a 201 with valid input", async () => {
     userId,
     version: 0,
     price: 20,
-    status: OrderStatus.CANCELLED,
+    status: OrderStatus.CREATED,
   });
   await order.save();
   await request(app)
     .post("/api/payments")
     .set("Cookie", global.signin(userId))
-    .send({ token: "tok_visa", orderId: order.id });
+    .send({ token: "tok_visa", orderId: order.id })
+    .expect(201);
 });
