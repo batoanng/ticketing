@@ -1,8 +1,7 @@
 import { OrderCreatedListener } from "../order-created-listener";
 import { natsWrapper } from "../../../nats-wrapper";
 import { Ticket } from "../../../models/ticket";
-import { OrderCreatedEvent } from "@joker7nbt-ticketing/common";
-import { OrderStatus } from "../../../../../common/src";
+import { OrderCreatedEvent, OrderStatus } from "@joker7nbt-ticketing/common";
 import mongoose from "mongoose";
 
 const setup = async () => {
