@@ -3,7 +3,7 @@ node_js:
   - "14"
 dist: trusty
 env:
-  - NODE_ENV=ci PORT=3000
+  - NODE_ENV=ci JWT_KEY='test'
 cache:
   directories:
     - auth/node_modules
