@@ -10,7 +10,9 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
 				<title>Ticketing app</title>
 			</Head>
 			<Header currentUser={currentUser} />
-			<Component currentUser={currentUser} {...pageProps} />
+			<div className="container">
+				<Component currentUser={currentUser} {...pageProps} />
+			</div>
 		</div>
 	);
 };
