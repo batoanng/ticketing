@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default ({ req }) => {
+const buildClient = ({ req }) => {
 	if (typeof window === 'undefined') {
 		return axios.create({
 			baseURL: `http://${process.env.INGRESS_NGINX_NAMESPACE}.svc.cluster.local`,
@@ -12,3 +12,5 @@ export default ({ req }) => {
 		});
 	}
 };
+
+export default buildClient;
