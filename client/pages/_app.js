@@ -10,18 +10,21 @@ const AppComponent = ({ Component, pageProps, currentUser }) => {
 				<title>Ticketing app</title>
 			</Head>
 			<Header currentUser={currentUser} />
-			<Component {...pageProps} />
+			<Component currentUser={currentUser} {...pageProps} />
 		</div>
 	);
 };
 
 AppComponent.getInitialProps = async (appContext) => {
-	const { data } = await buildClient(appContext.ctx).get(
-		`/api/users/currentuser`,
-	);
+	const client = await buildClient(appContext.ctx);
+	const { data } = client.get(`/api/users/currentuser`);
 	let pageProps = {};
 	if (appContext.Component.getInitialProps) {
-		pageProps = await appContext.Component.getInitialProps(appContext.ctx);
+		pageProps = await appContext.Component.getInitialProps(
+			appContext.ctx,
+			client,
+			data.currentUser,
+		);
 	}
 	return {
 		pageProps,
