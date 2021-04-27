@@ -1,13 +1,12 @@
 import {
-  TicketCreatedEvent,
   Subjects,
   Listener,
   NotFoundError,
   OrderStatus,
+  PaymentCreatedEvent,
 } from "@joker7nbt-ticketing/common";
 import { Message } from "node-nats-streaming";
 import { QUEUE_GROUP_NAME } from "../queue-group-name";
-import { PaymentCreatedEvent } from "../../../../common/src";
 import { Order } from "../../models/order";
 
 export class PaymentCreatedListener extends Listener<PaymentCreatedEvent> {
