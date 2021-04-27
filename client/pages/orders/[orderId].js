@@ -12,8 +12,8 @@ const OrderShow = ({ order, currentUser }) => {
 			token: 'tok_visa',
 			orderId: order.id,
 		},
-		(payment) => {
-			console.log(payment);
+		() => {
+			Router.push('/orders');
 		},
 	);
 
