@@ -4,7 +4,7 @@ node_js:
 dist: trusty
 env:
   global:
-    - JWT_KEY='jwtKey'
+    - JWT_SECRET='abcd'
 cache:
   directories:
     - auth/node_modules
