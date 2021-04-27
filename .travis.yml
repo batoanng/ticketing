@@ -8,8 +8,32 @@ env:
 cache:
   directories:
     - auth/node_modules
+    - expiration/node_modules
+    - orders/node_modules
+    - payments/node_modules
+    - tickets/node_modules
 script:
   - cd auth
+  - npm install
+  - sleep 3
+  - npm run test:ci
+  - sleep 3
+  - cd ../expiration
+  - npm install
+  - sleep 3
+  - npm run test:ci
+  - sleep 3
+  - cd ../orders
+  - npm install
+  - sleep 3
+  - npm run test:ci
+  - sleep 3
+  - cd ../payments
+  - npm install
+  - sleep 3
+  - npm run test:ci
+  - sleep 3
+  - cd ../tickets
   - npm install
   - sleep 3
   - npm run test:ci
