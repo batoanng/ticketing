@@ -23,17 +23,17 @@ router.post(
   validateRequest,
   async (req: Request, res: Response) => {
     const { token, orderId } = req.body;
-    const order = await Order.findById(orderId);
+    const order = await Order.findByEvent(orderId);
     if (!order) {
       throw new NotFoundError();
     }
-    if (order.userId !== req.currentUser?.id) {
+    if (order.userId !== req.currentUser!.id) {
       throw new NotAuthorizedError();
     }
     if (order.status === OrderStatus.CANCELLED) {
       throw new BadRequestError("Order is cancelled!");
     }
-    const charge = await stripe.charges?.create({
+    const charge = await stripe.charges.create({
       currency: "usd",
       amount: order.price * 100,
       source: token,
