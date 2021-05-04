@@ -5,11 +5,13 @@ deploy:
     manifests:
       - ./infra/k8s/*
 build:
-  local:
-    # donot need to push code to dokerhub every build image
-    push: false
+  #local:
+    ## donot need to push code to dokerhub every build image
+    #push: false
+  googleCloudBuild:
+    projectId: ticketing-dev-310505
   artifacts:
-    - image: joker7nbt/ticketing-auth
+    - image: us.gcr.io/ticketing-dev-310505/auth
       context: auth
       docker:
         dockerfile: Dockerfile
@@ -19,7 +21,7 @@ build:
           - src: 'src/**/*.ts'
             dest: .
         # the rest makes container rebuilds
-    - image: joker7nbt/ticketing-client
+    - image: us.gcr.io/ticketing-dev-310505/client
       context: client
       docker:
         dockerfile: Dockerfile
@@ -28,7 +30,7 @@ build:
         manual:
           - src: '**/*.js'
             dest: .
-    - image: joker7nbt/ticketing-tickets
+    - image: us.gcr.io/ticketing-dev-310505/tickets
       context: tickets
       docker:
         dockerfile: Dockerfile
@@ -37,7 +39,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: joker7nbt/ticketing-orders
+    - image: us.gcr.io/ticketing-dev-310505/orders
       context: orders
       docker:
         dockerfile: Dockerfile
@@ -46,7 +48,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: joker7nbt/ticketing-expiration
+    - image: us.gcr.io/ticketing-dev-310505/expiration
       context: expiration
       docker:
         dockerfile: Dockerfile
@@ -55,7 +57,7 @@ build:
         manual:
           - src: 'src/**/*.ts'
             dest: .
-    - image: joker7nbt/ticketing-payments
+    - image: us.gcr.io/ticketing-dev-310505/payments
       context: payments
       docker:
         dockerfile: Dockerfile
