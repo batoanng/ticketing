@@ -1,5 +1,5 @@
 # Ticketing
-Simple app for online buying movie tickets (backend design with stimulated frontend).
+Simple app for online buying movie tickets (system design).
 
 - [Requirements](#requirements)
 - [System design](#system-design)
